@@ -1,7 +1,7 @@
 local WebSocket = require("./lus/websocket").WebSocket
 
 local app = WebSocket:new()
-app:listen({port=8882}, function(net)
+app:listen({enc='json',port=8882}, function(net)
   net:on('Login', function(args)
     net:Emit('LoginSuccess', {user=1, pass='2'})
   end)

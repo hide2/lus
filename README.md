@@ -50,7 +50,7 @@ Run:
 
     luvit echo.lua
 
-- JavaScript WS RPC Client(require lus/ws.js)
+- JavaScript WS Client(require lus/ws.js)
 ```JavaScript
 var ws = WS.new();
 ws.connect({host:'ws://127.0.0.1:8001',enc:'json'},
@@ -70,7 +70,23 @@ function(e) {
 
 - user.lua(with db)
 ```Lua
+local db = require("./lus/db").DB:new("sqlite3", "/tmp/test.sqlite3")
+local User = require("./lus/db").Model:extend():new(db)
+local app = require("./lus/websocket").WebSocket:new()
 
+app:listen({port=8002,enc='json'}, function(net)
+  p("-- [Server]onListen", net:peeraddress().ip..":"..net:peeraddress().port)
+  net:on('User', function(args)
+    print("= [Server]on User", args.id)
+    local user = User:find(args.id)
+    net:Emit('User', {user=user})
+  end)
+end, function(net, data)
+  p("-- [Server]onReceive", data, net:peeraddress().ip..":"..net:peeraddress().port)
+end, function(net)
+  p("-- [Server]onClose")
+end)
+print("================= Server listen at", "websocket://"..app._ip..":"..app._port)
 ```
 
 - JavaScript WS RPC Client(require lus/ws.js)
@@ -97,7 +113,7 @@ function(e) {
 ## Benchmark
 - luvit bench_raw.lua
 
-    Requests per second: 60000 #/sec
+    Requests per second: 50000 #/sec
 
 - luvit bench.lua
 

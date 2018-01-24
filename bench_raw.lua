@@ -48,4 +48,4 @@ for i = 1,C do
   chain()
 end
 
--- 6w r/s
+-- 5w r/s
