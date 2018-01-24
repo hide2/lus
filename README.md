@@ -117,4 +117,4 @@ function(e) {
 
 - luvit bench.lua
 
-    Requests per second: 24000 #/sec
+    Requests per second: 26000 #/sec

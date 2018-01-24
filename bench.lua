@@ -50,4 +50,4 @@ for i = 1,C do
   chain()
 end
 
--- 2.4w r/s
+-- 2.6w r/s
