@@ -6,7 +6,7 @@ end, function(net, data)
   net:send(data)
 end, function()
 end)
-print("================= Server listen at", "websocket://"..server._ip..":"..server._port)
+print("================= Server listen at", "websocket://"..app._ip..":"..app._port)
 
 local PORT = 8881
 local HOST = "127.0.0.1"

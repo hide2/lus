@@ -8,7 +8,7 @@ app:listen({port=8882}, function(net)
 end, function(net, data)
 end, function()
 end)
-print("================= Server listen at", "websocket://"..server._ip..":"..server._port)
+print("================= Server listen at", "websocket://"..app._ip..":"..app._port)
 
 local PORT = 8882
 local HOST = "127.0.0.1"
