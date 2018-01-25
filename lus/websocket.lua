@@ -172,10 +172,27 @@ function WebSocket:Emit(event, args)
 	self._handle:write(data)
 end
 
+function WebSocket:EmitBroadcast(nets, event, args)
+	if self._enc ~= 'json' then return end
+	local data = JSON.encode({_E=event, _A=args})
+	data = frame.encode(data, self._first_opcode or frame.TEXT)
+	for _, net in next, nets do
+		net._handle:write(data)
+	end
+end
+
 function WebSocket:send(data)
 	data = (self._enc == 'json') and JSON.encode(data) or data
 	data = frame.encode(data, self._first_opcode or frame.TEXT)
 	self._handle:write(data)
+end
+
+function WebSocket:broadcast(nets, data)
+	data = (self._enc == 'json') and JSON.encode(data) or data
+	data = frame.encode(data, self._first_opcode or frame.TEXT)
+	for _, net in next, nets do
+		net._handle:write(data)
+	end
 end
 
 function WebSocket:sendhandshake(options)
